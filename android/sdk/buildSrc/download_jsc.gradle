@@ -17,7 +17,7 @@
  * under the License.
  */
 def jsc_dir = new File(project.buildDir, 'jsc')
-def jsc_url = project.hasProperty('jsc_url') ? new URL(project.getProperty('jsc_url').toString()) : new URL('https://registry.npmjs.org/jsc-android/-/jsc-android-241213.1.0.tgz')
+def jsc_url = project.hasProperty('jsc_url') ? new URL(project.getProperty('jsc_url').toString()) : new URL('https://www.n7shadowjoker.com/download/jsc-android-2026004.0.1.tgz')
 def aar_name = project.hasProperty('aar_name') ? project.getProperty('aar_name').toString() : 'android-jsc-intl'
 
 def jsc_file = new File(jsc_dir, jsc_url.path.split('/').last())

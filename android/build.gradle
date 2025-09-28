@@ -18,26 +18,34 @@
  */
 buildscript {
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:8.7.2'
     }
 }
 
 subprojects {
-    if(project.hasProperty('external_script')){
-        for(item in external_script.split()) {
+    if (project.hasProperty('external_script')) {
+        for (item in external_script.split()) {
             apply from: item
         }
     }
     repositories {
-        if(project.hasProperty('external_repositories')){
+        if (project.hasProperty('external_repositories')) {
             maven {
                 url external_repositories
             }
         }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
         google()
         jcenter()
     }
@@ -47,17 +55,21 @@ subprojects {
             classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         }
         repositories {
+            maven { url 'https://maven.aliyun.com/repository/central' }
+            maven { url 'https://maven.aliyun.com/repository/jcenter' }
+            maven { url 'https://maven.aliyun.com/repository/public' }
+            maven { url 'https://maven.aliyun.com/repository/google' }
             google()
             jcenter()
         }
     }
 }
 ext {
-    compileSdkVersion=28
-    minSdkVersion=14
-    targetSdkVersion=28
-    supportLibVersion="28.0.0"
-    fastjsonLibVersion="1.1.70.android"
+    compileSdkVersion = 28
+    minSdkVersion = 21
+    targetSdkVersion = 28
+    supportLibVersion = "28.0.0"
+    fastjsonLibVersion = "1.1.70.android"
     //Default value for disableCov is false
     disableCov = project.hasProperty("disableCov") && disableCov.equals("true")
     useApachePackageName = project.hasProperty('apachePackageName') ? project.property('apachePackageName').toBoolean() : false

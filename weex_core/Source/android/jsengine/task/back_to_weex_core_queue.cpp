@@ -73,10 +73,12 @@ BackToWeexCoreQueue::IPCTask *BackToWeexCoreQueue::getTask() {
             continue;
         }
 
-        assert(!taskQueue_.empty());
-        task = taskQueue_.front();
-        taskQueue_.pop_front();
-        threadLocker.unlock();
+//        assert(!taskQueue_.empty());
+        if (!taskQueue_.empty()) {
+            task = taskQueue_.front();
+            taskQueue_.pop_front();
+            threadLocker.unlock();
+        }
     }
 
     return task;

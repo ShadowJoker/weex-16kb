@@ -114,17 +114,19 @@ TimerTask *TimerQueue::getTask() {
             threadLocker.unlock();
             continue;
         }
-        assert(!timerQueue_.empty());
-        TimerTask *header = timerQueue_.front();
-        nextTaskWhen = header->when;
-        if (microTime() > nextTaskWhen) {
-            timerQueue_.pop_front();
-            task = header;
-        } else {
+//        assert(!timerQueue_.empty());
+        if (!timerQueue_.empty()) {
+            TimerTask *header = timerQueue_.front();
+            nextTaskWhen = header->when;
+            if (microTime() > nextTaskWhen) {
+                timerQueue_.pop_front();
+                task = header;
+            } else {
+                threadLocker.unlock();
+                continue;
+            }
             threadLocker.unlock();
-            continue;
         }
-        threadLocker.unlock();
     }
     return task;
 }
