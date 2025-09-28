@@ -17,19 +17,19 @@
  * under the License.
  */
  plugins {
-     id "com.github.hierynomus.license" version "0.14.0"
+//     id "com.github.hierynomus.license" version "0.14.0"
      id 'com.jfrog.artifactory' version '4.10.0'
  }
 
 apply plugin: 'com.android.library'
 apply plugin: 'checkstyle'
 apply plugin: 'com.jfrog.bintray'
-apply plugin: 'com.github.dcendents.android-maven'
+//apply plugin: 'com.github.dcendents.android-maven'
 
-apply from: 'buildSrc/jcenter.gradle'
+//apply from: 'buildSrc/jcenter.gradle'
 apply from: 'buildSrc/unstripped.gradle'
 apply from: 'buildSrc/checkStyle.gradle'
-apply from: 'buildSrc/download_jsc.gradle'
+//apply from: 'buildSrc/download_jsc.gradle'
 apply from: 'buildSrc/packageName.gradle'
 apply from: 'buildSrc/asan.gradle'
 
@@ -55,8 +55,15 @@ if (!project.hasProperty('ignoreVersionCheck') || !project.getProperty('ignoreVe
     }
 }
 
+android.buildFeatures.buildConfig true
+
 android {
+    buildFeatures {
+        buildConfig = true
+    }
+    namespace="com.taobao.weex"
     compileSdkVersion project.compileSdkVersion
+    ndkVersion "27.1.12297006"
     resourcePrefix "weex"
     useLibrary 'org.apache.http.legacy'
     if(project.hasProperty('removeSharedLib') && "true".equals(project.getProperty('removeSharedLib'))) {
@@ -99,7 +106,7 @@ android {
     if (ndkversion < 16) {
         api_level = "android-14";
     } else {
-        api_level = "android-16";
+        api_level = "android-24";
     }
 
     def android_project_dir = projectDir
@@ -145,8 +152,9 @@ android {
                         '-DANDROID_STL=' + "${cxx_stl}",
                         '-DCMAKE_BUILD_TYPE=Release',
                         '-DANDROID_PROJECT_DIR=' + "${android_project_dir}",
-                        '-DENABLE_ASAN=false'
-                if(buildRuntimeApi){
+                        '-DENABLE_ASAN=false',
+                        "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+                if (buildRuntimeApi) {
                     arguments '-DBUILD_RUNTIME_API='+"${buildRuntimeApi}"
                     if (initJSCPrivateApi){
                         arguments '-DINIT_JSC_PRIVATE_API='+"${initJSCPrivateApi}"
@@ -155,6 +163,7 @@ android {
                 if(project.hasProperty('enableASan') && "true" == project.getProperty('enableASan')) {
                     cppFlags "-fsanitize=address -fno-omit-frame-pointer"
                 }
+                version "3.22.1"
             }
         }
     }
@@ -199,6 +208,7 @@ android {
                 }
                 path 'src/legacyRelease/cpp/CMakeLists.txt'
             }
+            version "3.22.1"
         }
     }
 
@@ -263,32 +273,33 @@ dependencies {
     testImplementation 'org.json:json:20160212'
 }
 
-license {
-    header = file('../license/LICENSE')
-    mapping('cpp', 'JAVADOC_STYLE')
-    mapping('h', 'JAVADOC_STYLE')
-    excludes(['org/apache/weex/utils/WXDataStructureUtil.java'])
-}
+//license {
+//    header = file('../license/LICENSE')
+//    mapping('cpp', 'JAVADOC_STYLE')
+//    mapping('h', 'JAVADOC_STYLE')
+//    excludes(['org/apache/weex/utils/WXDataStructureUtil.java'])
+//}
 
-task weex_core_license(type: com.hierynomus.gradle.license.tasks.LicenseFormat) {
-    source = fileTree(dir: "../../weex_core").include(['**/*.h', '**/*.cpp', '**/*.cc', '**/*.c']).
-            exclude(['Source/rapidjson/**/*.h', 'Source/rapidjson/**/*.cpp',
-                     'Source/android/jniprebuild/jniheader/*.h',
-                     'Source/base/Compatible.cpp',
-                     'Source/IPC/**/*.h', 'Source/IPC/**/*.cpp', 'Source/IPC/**/*.c',
-                     'Source/base/base64/modp_base64/**/*.h',
-                     'Source/base/base64/modp_base64/**/*.cc',
-                     'Source/base/third_party/icu/*.h',
-                     'Source/base/third_party/icu/*.cpp',
-                     'Source/android/jsengine/dependence/**/*.h',
-                     'Source/android/jsengine/dependence/**/*.cpp',
-                     'Source/include/wtf/**/*.h',
-                     'Source/include/wtf/**/*.c',
-                     'Source/include/wtf/**/*.cpp',
-                     'Source/include/JavaScriptCore/**/*.h',
-                     'Source/include/JavaScriptCore/**/*.c',
-                     'Source/include/JavaScriptCore/**/*.cpp'])
-}
+//task weex_core_license(type: com.hierynomus.gradle.license.tasks.LicenseFormat) {
+//    source = fileTree(dir: "../../weex_core").include(['**/*.h', '**/*.cpp', '**/*.cc', '**/*.c']).
+//            exclude(['Source/rapidjson/**/*.h', 'Source/rapidjson/**/*.cpp',
+//                     'Source/android/jniprebuild/jniheader/*.h',
+//                     'Source/base/Compatible.cpp',
+//                     'Source/IPC/**/*.h', 'Source/IPC/**/*.cpp', 'Source/IPC/**/*.c',
+//                     'Source/base/base64/modp_base64/**/*.h',
+//                     'Source/base/base64/modp_base64/**/*.cc',
+//                     'Source/base/third_party/icu/*.h',
+//                     'Source/base/third_party/icu/*.cpp',
+//                     'Source/android/jsengine/dependence/**/*.h',
+//                     'Source/android/jsengine/dependence/**/*.cpp',
+//                     'Source/include/wtf/**/*.h',
+//                     'Source/include/wtf/**/*.c',
+//                     'Source/include/wtf/**/*.cpp',
+//                     'Source/include/JavaScriptCore/**/*.h',
+//                     'Source/include/JavaScriptCore/**/*.c',
+//                     'Source/include/JavaScriptCore/**/*.cpp'])
+//}
 
-preBuild.dependsOn licenseFormat, copyJSCHeaderToWeexCore
+//preBuild.dependsOn licenseFormat, copyJSCHeaderToWeexCore
+preBuild.dependsOn copyJSCHeaderToWeexCore
 clean.dependsOn cleanCopyJSCHeaderToWeexCore

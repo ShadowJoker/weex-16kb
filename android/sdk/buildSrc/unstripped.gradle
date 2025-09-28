@@ -51,18 +51,18 @@ def processNativeLibs = { unstripped, stripped ->
 }
 
 afterEvaluate { project ->
-    transformNativeLibsWithStripDebugSymbolForRelease.doLast {
-        processNativeLibs transformNativeLibsWithMergeJniLibsForRelease,
-                transformNativeLibsWithStripDebugSymbolForRelease
-    }
-
-    transformNativeLibsWithStripDebugSymbolForApacheRelease.doLast {
-        processNativeLibs transformNativeLibsWithMergeJniLibsForApacheRelease,
-                transformNativeLibsWithStripDebugSymbolForApacheRelease
-    }
-
-    transformNativeLibsWithStripDebugSymbolForLegacyRelease.doLast {
-        processNativeLibs transformNativeLibsWithMergeJniLibsForLegacyRelease,
-                transformNativeLibsWithStripDebugSymbolForLegacyRelease
-    }
+//    transformNativeLibsWithStripDebugSymbolForRelease.doLast {
+//        processNativeLibs transformNativeLibsWithMergeJniLibsForRelease,
+//                transformNativeLibsWithStripDebugSymbolForRelease
+//    }
+//
+//    transformNativeLibsWithStripDebugSymbolForApacheRelease.doLast {
+//        processNativeLibs transformNativeLibsWithMergeJniLibsForApacheRelease,
+//                transformNativeLibsWithStripDebugSymbolForApacheRelease
+//    }
+//
+//    transformNativeLibsWithStripDebugSymbolForLegacyRelease.doLast {
+//        processNativeLibs transformNativeLibsWithMergeJniLibsForLegacyRelease,
+//                transformNativeLibsWithStripDebugSymbolForLegacyRelease
+//    }
 }
