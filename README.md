@@ -2,10 +2,13 @@
 ## 简介
 基于 Weex 原版，适配 Android 16KB PageSize 问题。
 
-本项目是基于原版 Weex 项目 Fork 出来的。
+GooglePlay 要求 App 必须适配 16KB PageSize，否则影响应用上架和更新。有人在 Weex 项目里提过 issue，但都没有的到回复，目前阿里那边应该是没人跟进这个项目了，本着自己动手丰衣足食的原则，自己搞了一下。现在已经跑通，准备把这个东西开源出来，也给社区做点贡献😁
+
+本项目是基于原版 Weex 项目 Fork 出来的。仅做了编译配置修改，和极少的 C++ 语法适配性修改。没有修改 Weex 的代码逻辑，理论上不会影响 Weex 的功能。
 
 ## 主要改动点
 - 升级 NDK 27，适配 16KB PageSize
+- 更新 ReactNative 发布的最新 JSCore，适配 16KB PageSize
 - 配套工具链升级，Gradle配置修改
 - C++ 代码修改，由于升级 NDK 27，部分老代码需要做调整
 
