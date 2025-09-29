@@ -30,7 +30,6 @@ GooglePlay 要求 App 必须适配 16KB PageSize，否则影响应用上架和�
 - 如果集成 AAR 包以后，启动闪退，可能是由于 libc++shared.so 版本不一致问题。Weex AAR 包中包含了 libc++shared.so，需要确保 App 使用相同的版本和这个相同。
 
 ## 联系方式
-- 邮箱：zhangpeng2023@travelsky.com.cn
 - 欢迎沟通交流，请加微信：Shepard-N7，麻烦写一下备注
 
 --------------
